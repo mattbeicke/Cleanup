@@ -7,24 +7,19 @@
     <link rel="stylesheet" href="/static/app.css">
   </head>
   <body>
-    <header>
-      <div>
-        <p class="eyebrow">LOCAL-ONLY CLEANUP REVIEW</p>
-        <h1>Cleanup Assistant</h1>
-      </div>
-      <p class="safety">Removals always go to the Recycle Bin.</p>
-    </header>
+    <header><h1>Cleanup Assistant</h1></header>
     <main>
       <section class="browser-pane" aria-label="File browser">
         <form id="path-form">
-          <label for="path-input">Start folder</label>
+          <label for="path-input">Current folder</label>
           <div class="path-row">
+            <button id="up-button" type="button" title="Go up one folder" aria-label="Go up one folder">Up</button>
             <input id="path-input" type="text" spellcheck="false">
             <button type="submit">Browse</button>
           </div>
         </form>
-        <label class="toggle"><input id="hidden-toggle" type="checkbox"> Show hidden items</label>
-        <label class="toggle"><input id="protected-toggle" type="checkbox"> Show protected items</label>
+        <label class="toggle"><input id="hidden-toggle" type="checkbox" checked> Show hidden items</label>
+        <label class="toggle"><input id="protected-toggle" type="checkbox" checked> Show protected items</label>
         <p id="tree-path" class="current-path"></p>
         <div id="tree" class="tree" role="tree"></div>
       </section>
@@ -40,7 +35,10 @@
               <h2 id="name"></h2>
               <p id="selected-path" class="current-path"></p>
             </div>
-            <button id="recycle-button" class="danger">Move to Recycle Bin</button>
+            <div class="action-buttons">
+              <button id="open-button" hidden>Open with VS Code</button>
+              <button id="recycle-button" class="danger">Move to Recycle Bin</button>
+            </div>
           </div>
           <dl class="stats">
             <div><dt>Size</dt><dd id="size"></dd></div>
