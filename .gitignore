@@ -9,9 +9,13 @@ venv/
 # App state
 cleanup-decisions.json
 cleanup_history.db
+.server*.log
 
 # IDE / OS
 .idea/
 .vscode/
 .DS_Store
 Thumbs.db
+
+progress.md
+instructions.md

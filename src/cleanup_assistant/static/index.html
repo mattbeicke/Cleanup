@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cleanup Assistant</title>
+    <link rel="stylesheet" href="/static/app.css">
+  </head>
+  <body>
+    <header>
+      <div>
+        <p class="eyebrow">LOCAL-ONLY CLEANUP REVIEW</p>
+        <h1>Cleanup Assistant</h1>
+      </div>
+      <p class="safety">Removals always go to the Recycle Bin.</p>
+    </header>
+    <main>
+      <section class="browser-pane" aria-label="File browser">
+        <form id="path-form">
+          <label for="path-input">Start folder</label>
+          <div class="path-row">
+            <input id="path-input" type="text" spellcheck="false">
+            <button type="submit">Browse</button>
+          </div>
+        </form>
+        <label class="toggle"><input id="hidden-toggle" type="checkbox"> Show hidden items</label>
+        <label class="toggle"><input id="protected-toggle" type="checkbox"> Show protected items</label>
+        <p id="tree-path" class="current-path"></p>
+        <div id="tree" class="tree" role="tree"></div>
+      </section>
+      <section class="details-pane" aria-live="polite">
+        <div id="empty-state" class="empty-state">
+          <h2>Select a file or folder</h2>
+          <p>Browse a local folder, then select an item to see what it is, its stats, and a removal assessment.</p>
+        </div>
+        <article id="details" hidden>
+          <div class="title-row">
+            <div>
+              <p id="kind" class="eyebrow"></p>
+              <h2 id="name"></h2>
+              <p id="selected-path" class="current-path"></p>
+            </div>
+            <button id="recycle-button" class="danger">Move to Recycle Bin</button>
+          </div>
+          <dl class="stats">
+            <div><dt>Size</dt><dd id="size"></dd></div>
+            <div><dt>Modified</dt><dd id="modified"></dd></div>
+            <div><dt>Contents</dt><dd id="contents"></dd></div>
+          </dl>
+          <section class="assessment">
+            <div class="assessment-heading"><h3>Removal assessment</h3><span id="source"></span></div>
+            <p id="recommendation" class="recommendation"></p>
+            <p id="summary"></p>
+            <p id="reason" class="reason"></p>
+          </section>
+          <p id="protected-note" class="protected-note" hidden>This is protected by default; the app will not move it.</p>
+        </article>
+      </section>
+    </main>
+    <div id="toast" role="status"></div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

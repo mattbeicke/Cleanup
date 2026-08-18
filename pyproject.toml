@@ -4,17 +4,21 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cleanup-assistant"
-version = "1.0.0"
-description = "A safe, interactive file and folder cleanup assistant"
+version = "1.1.1"
+description = "A safe, local web app for reviewing files and folders"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = ["Send2Trash>=1.8.3"]
+dependencies = [
+    "FastAPI>=0.115.0",
+    "Send2Trash>=1.8.3",
+    "uvicorn>=0.30.0",
+]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0"]
+dev = ["httpx>=0.27.0", "pytest>=8.0"]
 
 [project.scripts]
-cleanup-assistant = "cleanup_assistant.cli:main"
+cleanup-assistant = "cleanup_assistant.web:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

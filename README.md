@@ -1,12 +1,12 @@
 # Cleanup Assistant
 
-Cleanup Assistant is a local, interactive command-line app that walks through a folder and asks whether each non-essential file or folder should be kept, skipped, or removed. For every item it gives a plain-English explanation based on its name, location, size, age, and a small content listing.
+Cleanup Assistant is a local web app for reviewing files and folders. It opens a browser-based file explorer: select an item on the left to see its stats, contents, plain-English explanation, and removal assessment on the right.
 
 It is deliberately conservative:
 
 - It ignores protected metadata and system-style directories by default (`.git`, virtual environments, `node_modules`, Windows system folders, and more).
-- It does **not** delete anything by default. Decisions are recorded in a JSON file so a review can be resumed.
-- With `--apply`, removals go to the Recycle Bin via `Send2Trash`, not permanent deletion.
+- It is only served on your computer (`127.0.0.1`) and chooses a free local port automatically.
+- Every removal goes through Windows' Recycle Bin via `Send2Trash`. The app contains no permanent-delete action.
 
 ## Install
 
@@ -20,28 +20,15 @@ pip install -e .
 
 ## Use
 
-Preview a directory (nothing is removed):
-
 ```powershell
-cleanup-assistant "C:\Users\you\Downloads"
+cleanup-assistant
 ```
 
-Apply removals by sending them to the Recycle Bin:
+The app opens your browser and starts at your home folder. Enter or paste a different folder into **Start folder** to browse it; double-click a folder in the explorer to open it. Toggle hidden or protected technical items only when you specifically need to inspect them.
 
-```powershell
-cleanup-assistant "C:\Users\you\Downloads" --apply
-```
+To remove an item, select it and choose **Move to Recycle Bin**. The app asks for confirmation and does not offer permanent deletion.
 
-Useful options:
-
-```text
---state PATH        Where to save review decisions (default: cleanup-decisions.json beside the target)
---include-hidden    Include hidden files and directories in the review
---include-protected Include normally protected technical folders (use with care)
---reset             Forget previous decisions for this target and start over
-```
-
-During review: `k` keeps an item, `d` marks it for removal, `s` leaves it undecided (so it will appear again next time), `i` repeats detailed information, and `q` exits safely. In preview mode, `d` records a proposed removal; the next run with `--apply` moves all previously proposed items to the Recycle Bin.
+The assessment is currently an offline, rule-based explanation. Its source is shown in the interface so it never claims to have checked an AI service or the internet when it has not. This is deliberately ready for a future optional AI/internet provider.
 
 ## Development
 
@@ -50,4 +37,4 @@ pip install -e .[dev]
 python -m pytest
 ```
 
-The code lives in `src/cleanup_assistant`; tests live in `tests`.
+The code lives in `src/cleanup_assistant`; the web server is `web.py`, UI files are in `static`, and tests live in `tests`.

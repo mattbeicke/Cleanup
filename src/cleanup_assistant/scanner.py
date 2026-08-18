@@ -40,6 +40,11 @@ def _info(path: Path, root: Path) -> ItemInfo:
         return ItemInfo(path, path.relative_to(root), path.is_dir(), 0, 0, ())
 
 
+def inspect_path(path: Path, root: Path) -> ItemInfo:
+    """Return display information for one accessible path."""
+    return _info(path, root)
+
+
 def discover(
     root: Path,
     *,
