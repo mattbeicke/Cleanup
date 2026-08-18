@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+
+# App state
+cleanup-decisions.json
+cleanup_history.db
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
