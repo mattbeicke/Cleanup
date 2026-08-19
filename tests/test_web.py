@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from cleanup_assistant.web import (
+from api.web import (
     DEFAULT_PORT,
     OpenRequest,
     RecycleRequest,

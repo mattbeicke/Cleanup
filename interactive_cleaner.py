@@ -8,7 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from cleanup_assistant.web import main
+from api.web import main
 
 
 if __name__ == "__main__":

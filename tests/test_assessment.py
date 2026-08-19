@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from cleanup_assistant.assessment import removal_assessment
-from cleanup_assistant.models import ItemInfo
+from cleanup_assistant.api.assessment import removal_assessment
+from cleanup_assistant.api.models import ItemInfo
 
 
 def test_temporary_file_is_likely_removable() -> None:
