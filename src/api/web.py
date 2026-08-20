@@ -19,6 +19,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from send2trash import send2trash
 
+from .ai import analyze_item
 from .assessment import removal_assessment
 from .explainer import human_size
 from .scanner import inspect_path, is_hidden, is_non_viewable, is_protected
@@ -210,6 +211,20 @@ def details(path: str) -> dict[str, Any]:
     return payload
 
 
+@app.get("/api/ai-analyze")
+def ai_analyze(path: str) -> dict[str, Any]:
+    """Analyze the selected filesystem item with the local Ollama model."""
+    item_path = resolve_accessible(path)
+
+    root = item_path.parent if item_path.parent != item_path else item_path
+    item = inspect_path(item_path, root)
+
+    try:
+        return analyze_item(item)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from None
+
+
 @app.get("/api/folder-size")
 def folder_size(path: str) -> dict[str, Any]:
     """Return a cached exact folder size or signal that calculation is underway."""
@@ -236,7 +251,8 @@ def recycle(request: RecycleRequest) -> dict[str, str]:
     if item.parent == item:
         raise HTTPException(status_code=400, detail="A filesystem root cannot be recycled.")
     if is_protected(item):
-        raise HTTPException(status_code=403, detail="Protected technical and system folders cannot be recycled in this app.")
+        raise HTTPException(status_code=403,
+                            detail="Protected technical and system folders cannot be recycled in this app.")
     try:
         send2trash(str(item))
     except OSError:
@@ -252,7 +268,8 @@ def open_in_vscode(request: OpenRequest) -> dict[str, str]:
         raise HTTPException(status_code=400, detail="Only files can be opened with VS Code.")
     vscode = find_vscode()
     if not vscode:
-        raise HTTPException(status_code=404, detail="VS Code was not found. Install it or add the 'code' command to PATH.")
+        raise HTTPException(status_code=404,
+                            detail="VS Code was not found. Install it or add the 'code' command to PATH.")
     try:
         # Invoke Code directly rather than Windows' shell so associations remain untouched.
         subprocess.Popen([vscode, str(item)], close_fds=True)
