@@ -1,3 +1,0 @@
-FROM devstral-small-2:24b
-PARAMETER num_ctx 24576
-PARAMETER num_predict 2048
