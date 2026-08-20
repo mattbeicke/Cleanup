@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from cleanup_assistant.api.state import load, save
+from api.state import load, save
 
 
 def test_decisions_round_trip(tmp_path: Path) -> None:

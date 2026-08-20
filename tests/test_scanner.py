@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from cleanup_assistant.api.scanner import discover, is_non_viewable
+from api.scanner import discover, is_non_viewable
 
 
 def test_discover_excludes_protected_and_hidden_folders(tmp_path: Path) -> None:

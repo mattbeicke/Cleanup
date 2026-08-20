@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from cleanup_assistant.api.explainer import explain, human_size
-from cleanup_assistant.api.models import ItemInfo
+from api.explainer import explain, human_size
+from api.models import ItemInfo
 
 
 def test_cache_folder_explanation_is_actionable() -> None:

@@ -16,7 +16,7 @@ def test_recycle_uses_send2trash_only(tmp_path: Path, monkeypatch) -> None:
     item = tmp_path / "remove-me.txt"
     item.write_text("temporary")
     recycled: list[str] = []
-    monkeypatch.setattr("cleanup_assistant.web.send2trash", recycled.append)
+    monkeypatch.setattr("api.web.send2trash", recycled.append)
 
     result = recycle(RecycleRequest(path=str(item)))
 
@@ -48,8 +48,8 @@ def test_open_in_vscode_starts_code_without_shell_association(tmp_path: Path, mo
     item = tmp_path / "readme.txt"
     item.write_text("notes")
     launched: list[list[str]] = []
-    monkeypatch.setattr("cleanup_assistant.web.find_vscode", lambda: "C:/VSCode/Code.exe")
-    monkeypatch.setattr("cleanup_assistant.web.subprocess.Popen", lambda command, **_: launched.append(command))
+    monkeypatch.setattr("api.web.find_vscode", lambda: "C:/VSCode/Code.exe")
+    monkeypatch.setattr("api.web.subprocess.Popen", lambda command, **_: launched.append(command))
 
     result = open_in_vscode(OpenRequest(path=str(item)))
 
