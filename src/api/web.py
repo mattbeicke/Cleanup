@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 import socket
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
@@ -112,24 +113,34 @@ def immediate_contents(folder: Path) -> tuple[list[str], bool]:
 
 
 def find_vscode() -> str | None:
-    """
-    #Locate VS Code without relying on, or changing, file associations.
+    """Locate VS Code without relying on, or changing, file associations."""
     command = shutil.which("code")
     if command:
         return command
+
     candidate_paths = [
-        # Per-user installations include the Programs directory.
-        Path(os.environ["LOCALAPPDATA"]) / "Programs" / "Microsoft VS Code" / "Code.exe"
+        (
+            Path(os.environ["LOCALAPPDATA"])
+            / "Programs"
+            / "Microsoft VS Code"
+            / "Code.exe"
+        )
         if os.environ.get("LOCALAPPDATA")
         else None,
-        # System-wide installations live directly under Program Files.
-        Path(root) / "Microsoft VS Code" / "Code.exe"
-        for root in (os.environ.get("ProgramFiles"), os.environ.get("ProgramFiles(x86)"))
-        if root
+        *(
+            Path(root) / "Microsoft VS Code" / "Code.exe"
+            for root in (
+                os.environ.get("ProgramFiles"),
+                os.environ.get("ProgramFiles(x86)"),
+            )
+            if root
+        ),
     ]
+
     for candidate in filter(None, candidate_paths):
         if candidate.is_file():
-            return str(candidate)"""
+            return str(candidate)
+
     return None
 
 

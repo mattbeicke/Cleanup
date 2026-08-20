@@ -136,7 +136,6 @@ document.querySelector("#up-button").addEventListener("click", () => {
 aiButton.addEventListener("click", async () => {
     if (!selectedPath) return;
 
-    console.log("here");
     const pathAtStart = selectedPath;
 
     aiButton.disabled = true;
